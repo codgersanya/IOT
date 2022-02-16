@@ -1,0 +1,90 @@
+#*************************************#
+#                                     #
+#        NbIotCell Define             #
+#                                     #
+#*************************************#
+
+l+mm
+!rm $tempdir/NbIotCellResult.log > /dev/null
+!rm $tempdir/NbIotCellalreadydefined.log > /dev/null
+unset all
+
+#*************************************#
+#     initial variables start         #
+#*************************************#
+
+$nbIotCellType = 2
+$earfcndl = 1617
+
+#*************************************#
+#     initial variables end           #
+#*************************************#
+
+func NbIotCellResult
+	if $nr_of_mos = 1
+		!echo 'NbIotCell=$NbIotCell' >> $tempdir/NbIotCellResult.log
+	else
+		!echo 'CRE of NbIotCell=$NbIotCell has failed!' >> $tempdir/NbIotCellResult.log
+	fi
+endfunc
+
+!echo 'RESULT:' >> $tempdir/NbIotCellResult.log
+!echo 'ALREADY DEFINED NBIOTCELLS WERE THE FOLLOWING:' >> $tempdir/NbIotCellalreadydefined.log
+!echo 'Please give in the required TAC of the new NbIotCells!'
+for ever
+	$tac = readinput(TAC:)
+	if $tac ~ [0-9]+
+		break
+	else
+		!echo 'Please enter valid TAC!'
+	fi
+done
+
+lt all
+mr L18C1
+ma L18C1 EUtranCellFDD earfcndl $earfcndl
+for $mo in L18C1
+	$n = $n + 1
+	$EUtranCellFDD = rdn($mo)
+	$EUtranCellFDD = $EUtranCellFDD -s .*=
+	$NbIotCell = $EUtranCellFDD -s .$
+	$NbIotCell = $NbIotCell9
+	if $n < 4
+		$cellId = 2$n
+	else if $n > 3 && $n < 8
+		$cellId = 7$n
+	else
+		!cat 'There is no rule for more than 6-sectors!'
+		!cat 'Script stopped!'
+		$return = 1
+		break
+	fi
+	get $EUtranCellFDD ^physicalLayerCellId$ > $physicalLayerCellId
+	pr $NbIotCell
+	if $nr_of_mos = 1
+		!echo 'NbIotCell=$NbIotCell' >> $tempdir/NbIotCellalreadydefined.log
+	else	
+		crn ENodeBFunction=1,NbIotCell=$NbIotCell
+		cellId $cellId
+		nbIotCellType $nbIotCellType
+		physicalLayerCellId $physicalLayerCellId
+		tac $tac
+		end
+		pr ENodeBFunction=1,NbIotCell=$NbIotCell
+		NbIotCellResult
+	fi
+done
+
+$nonew = readfile($tempdir/NbIotCellResult.log)
+if $nr_of_lines < 2
+	!echo 'NO NEW NBIOTCELLs HAVE BEEN ADDED!'
+else
+	!cat $tempdir/NbIotCellResult.log
+fi
+
+$old = readfile($tempdir/NbIotCellalreadydefined.log)
+if $nr_of_lines > 1
+	!cat $tempdir/NbIotCellalreadydefined.log
+fi
+
+l-
