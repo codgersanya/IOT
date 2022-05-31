@@ -170,21 +170,21 @@ done
 #          MME support                #
 #*************************************#
 
+
 confb+
-bl TermPointToMme=MME-GLXY
-bl TermPointToMme=MME-GLXY2
-bl TermPointToMme=MME901-EE
-bl TermPointToMme=MME903-EE
+
+bl TermPointToMme
+
+set TermPointToMme mmeSupportNbIoT false
 
 set TermPointToMme=MME-GLXY mmeSupportNbIoT true
 set TermPointToMme=MME-GLXY2 mmeSupportNbIoT true
 set TermPointToMme=MME901-EE mmeSupportNbIoT true
 set TermPointToMme=MME903-EE mmeSupportNbIoT true
 
-deb TermPointToMme=MME-GLXY
-deb TermPointToMme=MME-GLXY2
-deb TermPointToMme=MME901-EE
-deb TermPointToMme=MME903-EE
+bl TermPointToMme
+
 confb-
+
 
 l-
