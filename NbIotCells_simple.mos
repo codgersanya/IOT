@@ -172,19 +172,38 @@ done
 
 
 confb+
-
 bl TermPointToMme
 
 set TermPointToMme mmeSupportNbIoT false
-
 set TermPointToMme=MME-GLXY mmeSupportNbIoT true
 set TermPointToMme=MME-GLXY2 mmeSupportNbIoT true
 set TermPointToMme=MME901-EE mmeSupportNbIoT true
 set TermPointToMme=MME903-EE mmeSupportNbIoT true
 
 bl TermPointToMme
-
 confb-
 
+
+#*************************************#
+#       ENodeBFunction settings       #
+#*************************************#
+
+confb+
+set ENodeBFunction=1 nbRrcConnReestActive true
+set ENodeBFunction=1 tWaitForConnEstInd 3
+confb-
+
+
+#*************************************#
+#             Paging settings         #
+#*************************************#
+
+confb+
+set Paging	defaultPagingCycleNbIot 256
+set Paging	maxNoOfPagingRecordsNb 3
+set Paging	nBNbIot T1_16
+set Paging	pagingDiscardTimerDrxNb 6
+set Paging	pagingDiscardTimerEdrxNb 31
+confb-
 
 l-
