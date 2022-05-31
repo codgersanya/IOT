@@ -13,7 +13,7 @@ lt all
 #        initial variables            #
 #*************************************#
 
-$nbIotCellType = 2
+$nbIotCellType = NBIOT_GUARDBAND
 $earfcndl = 1617
 $tac = 3550
 
