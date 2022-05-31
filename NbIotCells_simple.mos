@@ -13,7 +13,7 @@ lt all
 #        initial variables            #
 #*************************************#
 
-$nbIotCellType = NBIOT_GUARDBAND
+$nbIotCellType = 2
 $earfcndl = 1617
 $tac = 3550
 
@@ -98,7 +98,7 @@ for $mo in L18C1
 		set $NbIotCell earfcndl -1
 		set $NbIotCell earfcnul -1
 		set $NbIotCell enableMfbi false
-		set $NbIotCell eutranCellRef EUtranCellFDD=69022B11
+		set $NbIotCell eutranCellRef EUtranCellFDD=$EUtranCellFDD
 		set $NbIotCell frequencyInfo 
 		set $NbIotCell inactivitySupervisionTimer inactivitySupervisionTimerCe0=50,inactivitySupervisionTimerCe1=100,inactivitySupervisionTimerCe2=200
 		set $NbIotCell intraFrequencyInfo pMax=23,qQualMin=-23,qRxLevMin=-156,tReselection=6
@@ -170,27 +170,30 @@ done
 #          MME support                #
 #*************************************#
 
-
 confb+
-bl TermPointToMme
+mr unlocked
+ma unlocked TermPointToMme administrativeState 1
+bl unlocked
 
 set TermPointToMme mmeSupportNbIoT false
+
 set TermPointToMme=MME-GLXY mmeSupportNbIoT true
 set TermPointToMme=MME-GLXY2 mmeSupportNbIoT true
 set TermPointToMme=MME901-EE mmeSupportNbIoT true
 set TermPointToMme=MME903-EE mmeSupportNbIoT true
 
-bl TermPointToMme
+deb unlocked
 confb-
-
 
 #*************************************#
 #       ENodeBFunction settings       #
 #*************************************#
 
 confb+
+gs+
 set ENodeBFunction=1 nbRrcConnReestActive true
 set ENodeBFunction=1 tWaitForConnEstInd 3
+gs-
 confb-
 
 
