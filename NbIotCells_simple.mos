@@ -17,12 +17,21 @@ $nbIotCellType = 2
 $earfcndl = 1617
 $tac = 3550
 
-#*************************************#
-#           Feature set               #
-#*************************************#
+#***************************************************************************#
+# 		Feature set:                                                #
+#       FeatureState=CXC4012079 Idle Mode Extended DRX			    #
+#       FeatureState=CXC4012081 NB-IoT Access				    #
+#       FeatureState=CXC4012262 NB-IoT Extended Transport Block Size        #
+#       FeatureState=CXC4012418 NB-IoT Release Assistance Indicator         #
+#       FeatureState=CXC4012451 Nb-Iot Dynamic Random Access Backoff        #
+#       FeatureState=CXC4012452 NB-IoT Admission Control                    #
+#       FeatureState=CXC4012488 NB-IoT Access Barring                       #
+#       FeatureState=CXC4012508 NB-IoT Downlink Interference Randomization  #
+#       FeatureState=CXC4012516 NB-IoT Two HARQ Processes                   #
+#***************************************************************************#
 
-set CXC4012081 featurestate 1
 set CXC4012079 featurestate 1
+set CXC4012081 featurestate 1
 set CXC4012262 featurestate 1
 set CXC4012418 featurestate 1
 set CXC4012451 featurestate 1
@@ -30,6 +39,7 @@ set CXC4012452 featurestate 1
 set CXC4012488 featurestate 1
 set CXC4012508 featurestate 1
 set CXC4012516 featurestate 1
+
 
 #*************************************#
 #          Main program               #
@@ -42,7 +52,7 @@ for $mo in L18C1
 	$EUtranCellFDD = rdn($mo)
 	$EUtranCellFDD = $EUtranCellFDD -s .*=
 	$NbIotCell = $EUtranCellFDD -s .$
-	$NbIotCell = $NbIotCell9
+	$NbIotCell = $NbIotCell2
 	if $n < 4
 		$cellId = 2$n
 	else if $n > 3 && $n < 7
@@ -65,20 +75,20 @@ for $mo in L18C1
 		set $NbIotCell abContConfFromLastProfile false
 		set $NbIotCell abIntensityObsrvPeriod 120
 		set $NbIotCell abMinIntensityThreshold 50
-		set $NbIotCell abPresence 2
+		set $NbIotCell abPresence AUTO
 		set $NbIotCell abThreshRejectHigh 10
 		set $NbIotCell abThreshRejectLow 5
 		set $NbIotCell abThreshTimeHigh 30
 		set $NbIotCell abThreshTimeLow 30
 		set $NbIotCell administrativeState 0
 		set $NbIotCell alpha 10
-		set $NbIotCell anchPowerBoostGainIndex 3
+		set $NbIotCell anchPowerBoostGainIndex ANCHOR_POWER_RATIO_4_1
 		set $NbIotCell attachWithoutPDNConnectivityList true
 		set $NbIotCell ceLevelNumber 3
 		set $NbIotCell cellBarred 1
 		set $NbIotCell cellRange 15
 		set $NbIotCell cmcIndex 2
-		set $NbIotCell dataInactivityTimer dataInactivityTimerCe0=200,dataInactivityTimerCe1=400,dataInactivityTimerCe2=600
+		set $NbIotCell dataInactivityTimer dataInactivityTimerCe0=300,dataInactivityTimerCe1=300,dataInactivityTimerCe2=300
 		set $NbIotCell dlAnchPrbIndex -1
 		set $NbIotCell dlAnchPrbUtilThr 65
 		set $NbIotCell dlLaIpnAbsolute -1233
@@ -90,12 +100,12 @@ for $mo in L18C1
 		set $NbIotCell enableMfbi false
 		set $NbIotCell eutranCellRef EUtranCellFDD=69022B11
 		set $NbIotCell frequencyInfo 
-		set $NbIotCell inactivitySupervisionTimer inactivitySupervisionTimerCe0=100,inactivitySupervisionTimerCe1=150,inactivitySupervisionTimerCe2=200
+		set $NbIotCell inactivitySupervisionTimer inactivitySupervisionTimerCe0=50,inactivitySupervisionTimerCe1=100,inactivitySupervisionTimerCe2=200
 		set $NbIotCell intraFrequencyInfo pMax=23,qQualMin=-23,qRxLevMin=-156,tReselection=6
 		set $NbIotCell largeRmaxUeAnchThr 100
 		set $NbIotCell latitude 0
 		set $NbIotCell longitude 0
-		set $NbIotCell mappingInfo mappingInfoNbSIB14=1,mappingInfoNbSIB16=0,mappingInfoNbSIB3=1,mappingInfoNbSIB4=0,mappingInfoNbSIB5=1
+		set $NbIotCell mappingInfo mappingInfoNbSIB3=1,mappingInfoNbSIB4=0,mappingInfoNbSIB5=1,mappingInfoNbSIB14=1,mappingInfoNbSIB16=0
 		set $NbIotCell maxRrcConnectedUsers 32
 		set $NbIotCell minNumLargeRmaxUes 2
 		set $NbIotCell msg3CqiAdjustFactorCe ceLevel0=0,ceLevel1=0,ceLevel2=2
@@ -109,7 +119,7 @@ for $mo in L18C1
 		set $NbIotCell nbIotDynOverloadDlNonAnchThr 75
 		set $NbIotCell nbIotDynOverloadUlAnchThr 45
 		set $NbIotCell nbIotDynOverloadUlNonAnchThr 75
-		set $NbIotCell networkSignallingValue 1
+		set $NbIotCell networkSignallingValue NS_01
 		set $NbIotCell nonPolledReleaseCfg 1
 		set $NbIotCell nprachAllocConfig 1
 		set $NbIotCell nprachCapMode4RxEnabled false
@@ -124,11 +134,11 @@ for $mo in L18C1
 		set $NbIotCell qHyst 4
 		set $NbIotCell qQualMin -34
 		set $NbIotCell qRxLevMin -156
-		set $NbIotCell raBackoffNbCe0 13
-		set $NbIotCell raBackoffNbCe1 13
-		set $NbIotCell raBackoffNbCe2 13
-		set $NbIotCell raDlSinrAdjustCe raDlSinrAdjustCe0=30,raDlSinrAdjustCe1=0,raDlSinrAdjustCe2=30
-		set $NbIotCell raNprachSinrAdjustCe raNprachSinrAdjustCe0=-60,raNprachSinrAdjustCe1=-110,raNprachSinrAdjustCe2=-40
+		set $NbIotCell raBackoffNbCe0 DYNAMIC_BACKOFF
+		set $NbIotCell raBackoffNbCe1 DYNAMIC_BACKOFF
+		set $NbIotCell raBackoffNbCe2 DYNAMIC_BACKOFF
+		set $NbIotCell raDlSinrAdjustCe raDlSinrAdjustCe0=0,raDlSinrAdjustCe1=0,raDlSinrAdjustCe2=0
+		set $NbIotCell raNprachSinrAdjustCe raNprachSinrAdjustCe0=0,raNprachSinrAdjustCe1=0,raNprachSinrAdjustCe2=0
 		set $NbIotCell raNpuschSinrAdjustCe raNpuschSinrAdjustCe0=0,raNpuschSinrAdjustCe1=0,raNpuschSinrAdjustCe2=0
 		set $NbIotCell raiEnabled true
 		set $NbIotCell raiReleaseDelayTimer 5
@@ -151,21 +161,30 @@ for $mo in L18C1
 		set $NbIotCell ulNonAnchPrbUtilThr 70
 		set $NbIotCell useHostCellPci true
 		set $NbIotCell userLabel 
-		set $NbIotCell zzzTemporary11 -2000000000
-		set $NbIotCell zzzTemporary12 -2000000000
-		set $NbIotCell zzzTemporary13 -2000000000
-		set $NbIotCell zzzTemporary14 -2000000000
-		set $NbIotCell zzzTemporary17 
-		set $NbIotCell zzzTemporary18 
-		set $NbIotCell zzzTemporary21 -2000000000
-		set $NbIotCell zzzTemporary22 -2000000000
-		set $NbIotCell zzzTemporary23 -2000000000
-		set $NbIotCell zzzTemporary24 -2000000000
-		set $NbIotCell zzzTemporary25 -2000000000
-		set $NbIotCell zzzTemporary26 -2000000000
 		pr ENodeBFunction=1,NbIotCell=$NbIotCell
 		NbIotCellResult
 	fi
 done
+
+#*************************************#
+#          MME support                #
+#*************************************#
+
+confb+
+bl TermPointToMme=MME-GLXY
+bl TermPointToMme=MME-GLXY2
+bl TermPointToMme=MME901-EE
+bl TermPointToMme=MME903-EE
+
+set TermPointToMme=MME-GLXY mmeSupportNbIoT true
+set TermPointToMme=MME-GLXY2 mmeSupportNbIoT true
+set TermPointToMme=MME901-EE mmeSupportNbIoT true
+set TermPointToMme=MME903-EE mmeSupportNbIoT true
+
+deb TermPointToMme=MME-GLXY
+deb TermPointToMme=MME-GLXY2
+deb TermPointToMme=MME901-EE
+deb TermPointToMme=MME903-EE
+confb-
 
 l-
