@@ -199,11 +199,13 @@ confb-
 #*************************************#
 
 confb+
-set Paging	defaultPagingCycleNbIot 256
-set Paging	maxNoOfPagingRecordsNb 3
-set Paging	nBNbIot T1_16
-set Paging	pagingDiscardTimerDrxNb 6
-set Paging	pagingDiscardTimerEdrxNb 31
+gs+
+set Paging defaultPagingCycleNbIot 256
+set Paging maxNoOfPagingRecordsNb 3
+set Paging nBNbIot T1_16
+set Paging pagingDiscardTimerDrxNb 6
+set Paging pagingDiscardTimerEdrxNb 31
+gs-
 confb-
 
 l-
